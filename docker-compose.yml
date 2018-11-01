@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+
+  broker:
+    image: "rabbitmq:3-management"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - ./services/broker/rabbitmq-isolated.conf:/etc/rabbitmq/rabbitmq.config
+    labels:
+      - "traefik.enable=false"
+    

@@ -1,0 +1,23 @@
+
+
+
+
+//Get Rating
+GET http://localhost:8080/rating/
+
+
+
+POST http://localhost:8080/rating/
+content-type: application/json
+
+{
+    "idPurchase": "abcd",
+    "idStore": "abcd",
+    "idUser": "abcd",
+    "opinion": "abcd"
+}
+
+
+
+
+
