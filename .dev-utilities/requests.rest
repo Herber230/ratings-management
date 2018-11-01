@@ -1,6 +1,17 @@
 
 
 
+//Get Country
+GET http://localhost:3000/api/country
+
+GET http://localhost:3000/api/city
+
+GET http://localhost:3000/api/purchase
+
+GET http://localhost:3000/api/user
+
+
+
 
 //Get Rating
 GET http://localhost:8080/rating/

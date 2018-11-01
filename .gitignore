@@ -1,6 +1,7 @@
 # For nodejs applications
 node_modules
 dist
+package-lock.json
 
 #For spring-boot applications
 target
