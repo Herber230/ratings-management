@@ -14,7 +14,9 @@ import com.ratingsmanagement.stores.repositories.StoreRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.util.StopWatch;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ratingsmanagement.stores.eventHandlers.MessageTypes.PurchaseMessage;
+import java.io.IOException;
 
 /**
  *
@@ -27,7 +29,7 @@ public class StoreController {
 
   @Autowired
   private StoreRepository repository;
-    
+  
   @RequestMapping(value = "/", method = RequestMethod.GET)
   public List<Store> getAll() {
     return repository.findAll();
@@ -58,23 +60,17 @@ public class StoreController {
   
   
   @RabbitListener(queues = "#{autoDeleteQueue.name}")
-  public void receive1(String in) throws InterruptedException {
-            
-        StopWatch watch = new StopWatch();
-        watch.start();
-        System.out.println(" [x] Received '" + in + "'");
-        doWork(in);
-        watch.stop();
-        System.out.println(" [x] Done in " + watch.getTotalTimeSeconds() + "s");
+  public void receive1(String message ) throws IOException
+  {
+      ObjectMapper mapper = new ObjectMapper();
+      PurchaseMessage purchaseMessage = mapper.readValue(message, PurchaseMessage.class);
+      Store store = repository.findBy_id( new ObjectId( purchaseMessage.getIdStore() ) );
+      store.ratingScore =  purchaseMessage.getTotalScore();
+      store.ratingCount =  purchaseMessage.getCountPurchases();
+              
+      repository.save(store);
   }
   
-  private void doWork(String in) throws InterruptedException {
-            for (char ch : in.toCharArray()) {
-                    if (ch == '.') {
-                            Thread.sleep(1000);
-                    }
-            }
-    }
   
   
   

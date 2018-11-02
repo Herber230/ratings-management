@@ -22,7 +22,9 @@ public class Rating
     public String idStore;
     public String idUser;
     public String opinion;
+    public Integer score;
     public Date created;
+    public Date modified;
     public Boolean deferredDeletion;
             
     // </editor-fold>
@@ -34,12 +36,14 @@ public class Rating
         this.deferredDeletion = false;  
     };
     
-    public Rating( String idPurchase, String idStore, String idUser, String opinion) 
+    public Rating( String idPurchase, String idStore, String idUser, Integer score, String opinion) 
     {
         this.deferredDeletion = false;
         this.idPurchase = idPurchase;
         this.idStore = idStore;
-        this.idUser = idUser;  
+        this.idUser = idUser;
+        this.score = score;
+        this.opinion = opinion;
     };
     
     
@@ -79,6 +83,14 @@ public class Rating
         this.idUser = idUser;
     }
 
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+    
     public String getOpinion() {
         return opinion;
     }

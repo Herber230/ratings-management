@@ -25,7 +25,8 @@ content-type: application/json
     "idPurchase": "abcd",
     "idStore": "abcd",
     "idUser": "abcd",
-    "opinion": "abcd"
+    "opinion": "abcd",
+    "score": 5
 }
 
 

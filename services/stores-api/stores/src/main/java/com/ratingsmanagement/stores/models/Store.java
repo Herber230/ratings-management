@@ -12,7 +12,7 @@ import org.springframework.data.annotation.Id;
 public class Store 
 {
  
-    // <editor-fold defaultstate="collapsed" desc="Properties">
+    // <editor-fold defaultstate="uncollapsed" desc="Properties">
 
     @Id 
     public ObjectId _id;
@@ -24,7 +24,9 @@ public class Store
     public Date created;
     public Date modified;
     public Boolean deferredDeletion;
-            
+    public Integer ratingScore;
+    public Integer ratingCount;
+    
     // </editor-fold>
         
     // <editor-fold defaultstate="collapsed" desc="Methods">
@@ -34,7 +36,7 @@ public class Store
         this.deferredDeletion = false;  
     };
     
-    public Store( String name, String address, String idCity, String idCountry) 
+    public Store( String name, String address, String idCity, String idCountry ) 
     {
         this.deferredDeletion = false;
         this.name = name;
@@ -112,7 +114,25 @@ public class Store
         this.deferredDeletion = deferredDeletion;
     }
 
+    public Integer getRatingScore() {
+        return ratingScore;
+    }
+
+    public void setRatingScore(Integer ratingScore) {
+        this.ratingScore = ratingScore;
+    }
+
+    public Integer getRatingCount() {
+        return ratingCount;
+    }
+
+    public void setRatingCount(Integer ratingCount) {
+        this.ratingCount = ratingCount;
+    }
+    
     // </editor-fold>
+
+    
 
     
 }

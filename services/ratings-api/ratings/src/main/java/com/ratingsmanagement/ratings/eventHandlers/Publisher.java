@@ -5,10 +5,15 @@
  */
 package com.ratingsmanagement.ratings.eventHandlers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.ratingsmanagement.ratings.models.Rating;
+import com.ratingsmanagement.ratings.eventHandlers.MessageTypes.RatingMessage;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  *
@@ -30,5 +35,15 @@ public class Publisher {
 		template.convertAndSend(main_events.getName(), key, finalMessage);
 		System.out.println(" [x] Sent '" + message + "'");
 	}
+        
+        public void ratingSaved( Rating rating, String action ) throws JsonProcessingException
+        {
+            String key = "saved.rating";            
+            ObjectMapper mapper = new ObjectMapper();
+            
+            String messageToSend = mapper.writeValueAsString(new RatingMessage( rating._id.toHexString(), rating.idPurchase, rating.idStore, rating.idUser, rating.score, action ));
+            
+            template.convertAndSend(main_events.getName(), key, messageToSend);           
+        }
 
 }

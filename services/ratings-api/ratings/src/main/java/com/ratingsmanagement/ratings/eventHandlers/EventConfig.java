@@ -12,13 +12,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EventConfig {
     
-
     @Bean
     public TopicExchange main_events()
     {
         return new TopicExchange("main_events");
     }
-    
-    
-    
+   
 }

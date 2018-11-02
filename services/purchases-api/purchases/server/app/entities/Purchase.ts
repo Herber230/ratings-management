@@ -4,15 +4,23 @@ import {
     EntityDocument, 
     DefinedEntity,
     DefinedAccessor,
-    ExpositionType  
+    ExpositionType,  
+    EMMemberActivator,
+    MemberBindingType,
+    EMSession
 } from 'entifix-ts-backend';
+
+import { PurchaseRating, IPurchaseRatingModel, IPurchaseRating } from './PurchaseRating';
+
+
 
 interface IPurchase extends IBaseEntity
 {
-    idClient: string,
+    idUser: string,
     total: number,
     currencySymbol: string,
-    idStore: string    
+    idStore: string,   
+    purchaseRatings : Array<IPurchaseRating>
 }
 
 interface IPurchaseModel extends EntityDocument, IPurchase { }
@@ -21,6 +29,8 @@ interface IPurchaseModel extends EntityDocument, IPurchase { }
 class Purchase extends EMEntity implements IPurchase
 {
     //#region Properties (Fields)
+
+    private _purchaseRatings : Array<PurchaseRating>;
 
     //#endregion
 
@@ -33,10 +43,10 @@ class Purchase extends EMEntity implements IPurchase
     //#region Accessors (Properties)
 
     @DefinedAccessor({ exposition: ExpositionType.Normal, schema: { type: String } })
-    get idClient () : string
-    { return (<IPurchaseModel>this._document).idClient; }
-    set idClient (value : string)
-    { (<IPurchaseModel>this._document).idClient = value; }
+    get idUser () : string
+    { return (<IPurchaseModel>this._document).idUser; }
+    set idUser (value : string)
+    { (<IPurchaseModel>this._document).idUser = value; }
 
     @DefinedAccessor({ exposition: ExpositionType.Normal, schema: { type: String } })
     get idStore () : string
@@ -59,6 +69,25 @@ class Purchase extends EMEntity implements IPurchase
     @DefinedAccessor({ exposition: ExpositionType.ReadOnly })
     get currencyTotal () : string
     { return `${this.currencySymbol} . ${this.total}`; }
+
+
+    @DefinedAccessor( { exposition: ExpositionType.Normal, schema: { type: Array },
+                        activator: new EMMemberActivator<PurchaseRating, IPurchaseRatingModel>(PurchaseRating.getInfo(), MemberBindingType.Snapshot, true ) } )
+    get purchaseRatings () : Array<PurchaseRating>
+    { return this._purchaseRatings; }
+    set purchaseRatings( value : Array<PurchaseRating> )
+    {
+        this._purchaseRatings = value;
+
+        if (value != null)
+        {
+            let docs = value.map( v => v.getDocument() as IPurchaseRatingModel );
+            (this._document as IPurchaseModel).purchaseRatings = docs;
+        }
+        else
+            (this._document as IPurchaseModel).purchaseRatings = null;
+    }
+
 
     //#endregion
 }

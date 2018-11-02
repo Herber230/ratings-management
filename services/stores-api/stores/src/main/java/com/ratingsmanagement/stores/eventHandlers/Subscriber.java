@@ -30,7 +30,7 @@ public class Subscriber {
 
         @Bean
         public Binding binding(TopicExchange main_events, Queue autoDeleteQueue) {
-                return BindingBuilder.bind(autoDeleteQueue).to(main_events).with("creation.rating");
+                return BindingBuilder.bind(autoDeleteQueue).to(main_events).with("saved.purchase");
         }
     
 }

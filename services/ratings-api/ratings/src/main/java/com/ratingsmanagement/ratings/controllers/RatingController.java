@@ -1,5 +1,6 @@
 package com.ratingsmanagement.ratings.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +29,9 @@ public class RatingController {
   
   @Autowired
   Publisher publisher;
- 
+
+  // <editor-fold defaultstate="uncollapsed" desc="Exposed Methods">
+
   @RequestMapping(value = "/", method = RequestMethod.GET)
   public List<Rating> getAll() {
     return repository.findAll();
@@ -46,10 +49,12 @@ public class RatingController {
   }
  
   @RequestMapping(value = "/", method = RequestMethod.POST)
-  public Rating create(@Valid @RequestBody Rating rating) {
+  public Rating create(@Valid @RequestBody Rating rating) throws JsonProcessingException {
     rating.set_id(ObjectId.get());
     repository.save(rating);
-    publisher.send("Calificacion registrada");
+    
+    publisher.ratingSaved(rating, "create");
+    
     return rating;
   }
  
@@ -57,5 +62,18 @@ public class RatingController {
   public void deletePet(@PathVariable ObjectId id) {
     repository.delete(repository.findBy_id(id));
   }
+  
+  // </editor-fold>
+
+  
+  
+
+  // <editor-fold defaultstate="uncollapsed" desc="Utility methods">
+
+  
+  
+  // </editor-fold>
+  
+   
 }    
 
