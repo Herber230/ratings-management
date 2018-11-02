@@ -70,7 +70,7 @@ class PurchaseEventHandlers
                                 purchasesByStore => {
 
                                     let totalScoreByStore = 0;
-                                    purchasesByStore.forEach( purchase => {
+                                    purchasesByStore.filter( p => p.purchaseRatings ).forEach( purchase => {
                                         totalScoreByStore += purchase.purchaseRatings.map( pr => pr.score ).reduce( (p,n) => p + n );
                                     });
 

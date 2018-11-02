@@ -14,6 +14,7 @@ import com.ratingsmanagement.stores.repositories.StoreRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.core.Message;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ratingsmanagement.stores.eventHandlers.MessageTypes.PurchaseMessage;
 import java.io.IOException;
@@ -60,10 +61,13 @@ public class StoreController {
   
   
   @RabbitListener(queues = "#{autoDeleteQueue.name}")
-  public void receive1(String message ) throws IOException
+  public void receive1(Message message ) throws IOException
   {
+      byte[] byteMessage = message.getBody();
+      String stringMessage = new String(byteMessage);
       ObjectMapper mapper = new ObjectMapper();
-      PurchaseMessage purchaseMessage = mapper.readValue(message, PurchaseMessage.class);
+      
+      PurchaseMessage purchaseMessage = mapper.readValue(stringMessage, PurchaseMessage.class);
       Store store = repository.findBy_id( new ObjectId( purchaseMessage.getIdStore() ) );
       store.ratingScore =  purchaseMessage.getTotalScore();
       store.ratingCount =  purchaseMessage.getCountPurchases();

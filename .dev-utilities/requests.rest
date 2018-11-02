@@ -16,8 +16,6 @@ GET http://localhost:3000/api/user
 //Get Rating
 GET http://localhost:8080/rating/
 
-
-
 POST http://localhost:8080/rating/
 content-type: application/json
 
@@ -28,6 +26,58 @@ content-type: application/json
     "opinion": "abcd",
     "score": 5
 }
+
+
+
+GET http://localhost:8090/store/
+
+GET http://localhost:8090/store/5bdbfde3f294dd3b7c5ed244
+
+POST http://localhost:8090/store/
+content-type: application/json
+
+{
+    "name": "Tienda Rehingona"
+}
+
+
+
+
+
+
+GET http://localhost:3000/api/purchase
+
+GET http://localhost:3000/api/purchase/5bdbffae67a3533f26d2bd49
+
+POST http://localhost:3000/api/purchase
+content-type: application/json
+
+{
+    "idUser": "abcd2",
+    "total": 200,
+    "currencySymbol": "Q",
+    "idStore": "5bdbfde3f294dd3b7c5ed244"   
+}
+
+
+
+GET http://localhost:8080/rating/
+
+POST http://localhost:8080/rating/
+content-type: application/json
+
+{
+    "idPurchase": "5bdbffae67a3533f26d2bd49",
+    "idStore": "5bdbfde3f294dd3b7c5ed244",
+    "idUser": "abcd",
+    "opinion": "abcd",
+    "score": 2
+}
+
+
+
+
+
 
 
 
