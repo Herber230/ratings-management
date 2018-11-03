@@ -19,6 +19,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ratingsmanagement.stores.eventHandlers.MessageTypes.PurchaseMessage;
 import java.io.IOException;
 
+import com.ratingsmanagement.stores.utilities.WrapperCollection;
+import com.ratingsmanagement.stores.utilities.WrapperEntity;
+
 /**
  *
  * @author herber230
@@ -31,33 +34,43 @@ public class StoreController {
   @Autowired
   private StoreRepository repository;
   
-  @RequestMapping(value = "/", method = RequestMethod.GET)
-  public List<Store> getAll() {
-    return repository.findAll();
+  @RequestMapping(value = "", method = RequestMethod.GET)
+  public WrapperCollection<Store> getAll() {
+      List<Store> stores = repository.findByDeferredDeletionIsFalse();
+      return new WrapperCollection<>( null , false, stores, stores.size(), stores.size(), 1 );
   }
   
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-  public Store getById(@PathVariable("id") ObjectId id) {
-    return repository.findBy_id(id);
+  public WrapperEntity<Store> getById(@PathVariable("id") ObjectId id) {
+    return new WrapperEntity<>(null, false, "Entity", repository.findById(id));
   }
  
-  @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-  public void modifyById(@PathVariable("id") ObjectId id, @Valid @RequestBody Store store) {
-    store.set_id(id);
+  @RequestMapping(value = "", method = RequestMethod.PUT)
+  public WrapperEntity<Store> modifyById(@Valid @RequestBody Store store) {
     repository.save(store);
+    return new WrapperEntity<>(null, false, "Entity", store);
   }
  
-  @RequestMapping(value = "/", method = RequestMethod.POST)
-  public Store create(@Valid @RequestBody Store store) {
-    store.set_id(ObjectId.get());
-    repository.save(store);
-    return store;
+  @RequestMapping(value = "", method = RequestMethod.POST)
+  public WrapperEntity<Store> create(@Valid @RequestBody Store store) {
+    store.setId(ObjectId.get());
+    repository.save(store);    
+    return new WrapperEntity<>(null, false, "Entity", store);
   }
  
+  
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-  public void deletePet(@PathVariable ObjectId id) {
-    repository.delete(repository.findBy_id(id));
+  public WrapperEntity<Store> delete(@PathVariable ObjectId id) {
+    Store store = repository.findById(id);
+    store.deferredDeletion = true;
+    repository.save(store);
+    return new WrapperEntity<>(null, false, "Entity", store);
   }
+  
+  
+  
+  
+  
   
   
   @RabbitListener(queues = "#{autoDeleteQueue.name}")
@@ -68,17 +81,12 @@ public class StoreController {
       ObjectMapper mapper = new ObjectMapper();
       
       PurchaseMessage purchaseMessage = mapper.readValue(stringMessage, PurchaseMessage.class);
-      Store store = repository.findBy_id( new ObjectId( purchaseMessage.getIdStore() ) );
+      Store store = repository.findById( new ObjectId( purchaseMessage.getIdStore() ) );
       store.ratingScore =  purchaseMessage.getTotalScore();
       store.ratingCount =  purchaseMessage.getCountPurchases();
               
       repository.save(store);
   }
-  
-  
-  
-  
-  
   
   
 }    

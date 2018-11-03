@@ -60,7 +60,7 @@ var globalMetadata =
         {
             "name": "Store",
             "base": "Entity",
-            "url": "http://localhost:3000/api/user",
+            "url": "http://localhost:8090/store",
             "definedMembers":   [   { "name": "name", "paginable": "true", "default": "true", "display": "Nombre" },
                                     { "name": "address", "paginable": "true", "default": "true", "display": "Direccion" },
                                     { "name": "idCity", "paginable": "true", "default": "true", "display": "Ciudad" },

@@ -9,11 +9,15 @@ package com.ratingsmanagement.ratings.repositories;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import com.ratingsmanagement.ratings.models.Rating;
+import java.util.List;
 
 /**
  *
  * @author herber230
  */
 public interface RatingRepository extends MongoRepository<Rating, String> {
-  Rating findBy_id(ObjectId _id);
+  
+    Rating findById(ObjectId id);
+  
+    List<Rating> findByDeferredDeletionIsFalse();
 }

@@ -164,6 +164,14 @@
                 resolve: helper.resolveFor('CmpCatalogo', 'UserFiles'),
                 params: { itemsPerPage: { value: '10', squash: true }, page: { value: '1', squash: true }, searchText: { value: null, squash: true, dynamic: true }, chips: { value: null, squash: true }, customSearch: { value: null, squash: true } },
                 data: { displayRoute: ['Catálogos', 'Usuarios'] }
+            })
+            .state('app.store', {
+                url: '/store?id&searchText&page&itemsPerPage&chips&customSearch&nav',
+                title: 'Tiendas',
+                template: '<cmp-catalogo nombre-recurso="Store" titulo="Tienda" icono="description"></cmp-catalogo>',
+                resolve: helper.resolveFor('CmpCatalogo', 'StoreFiles'),
+                params: { itemsPerPage: { value: '10', squash: true }, page: { value: '1', squash: true }, searchText: { value: null, squash: true, dynamic: true }, chips: { value: null, squash: true }, customSearch: { value: null, squash: true } },
+                data: { displayRoute: ['Catálogos', 'Tiendas'] }
             });
 
         //Security management
@@ -245,7 +253,10 @@
             
             'UserFiles':                            ['app/shared/components/cmpUser/cmpUserForm.js',
                                                      'app/shared/components/cmpUser/cmpUserTable.js'],
-                                                     
+            
+            'StoreFiles':                           ['app/shared/components/cmpStore/cmpStoreForm.js',
+                                                     'app/shared/components/cmpStore/cmpStoreTable.js'],                                         
+            
             //Single Components ==========================================================================================================================================
             'CmpCatalogo':                          ['app/shared/components/cmpCatalogo/cmpCatalogo.js',
                                                      'app/shared/components/cmpCatalogoColumnas/cmpCatalogoColumnas.js',
@@ -436,6 +447,10 @@
                     {
                         name: "Usuarios",
                         state: "app.user({id:null})"
+                    },
+                    {
+                        name: "Tiendas",
+                        state: "app.store({id:null})"
                     }
                 ]
             },

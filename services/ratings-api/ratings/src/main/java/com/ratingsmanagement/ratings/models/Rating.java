@@ -13,10 +13,10 @@ import org.springframework.data.annotation.Id;
 public class Rating 
 {
  
-    // <editor-fold defaultstate="collapsed" desc="Properties">
+    // <editor-fold defaultstate="uncollapsed" desc="Properties">
 
     @Id 
-    public ObjectId _id;
+    public ObjectId id;
 
     public String idPurchase;
     public String idStore;
@@ -51,12 +51,12 @@ public class Rating
         
     // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
 
-    public String get_id() {
-        return _id.toHexString();
+    public String getId() {
+        return id.toHexString();
     }
 
-    public void set_id(ObjectId _id) {
-        this._id = _id;
+    public void set_id(ObjectId id) {
+        this.id = id;
     }
 
     public String getIdPurchase() {

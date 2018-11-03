@@ -14,6 +14,10 @@ import com.ratingsmanagement.ratings.models.Rating;
 import com.ratingsmanagement.ratings.repositories.RatingRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import com.ratingsmanagement.ratings.utilities.WrapperCollection;
+import com.ratingsmanagement.ratings.utilities.WrapperEntity;
+
+
 import com.ratingsmanagement.ratings.eventHandlers.Publisher;
 /**
  *
@@ -31,36 +35,41 @@ public class RatingController {
   Publisher publisher;
 
   // <editor-fold defaultstate="uncollapsed" desc="Exposed Methods">
-
-  @RequestMapping(value = "/", method = RequestMethod.GET)
-  public List<Rating> getAll() {
-    return repository.findAll();
+  
+  @RequestMapping(value = "", method = RequestMethod.GET)
+  public WrapperCollection<Rating> getAll() {
+      List<Rating> ratings = repository.findByDeferredDeletionIsFalse();
+      return new WrapperCollection<>( null , false, ratings, ratings.size(), ratings.size(), 1 );
   }
   
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-  public Rating getById(@PathVariable("id") ObjectId id) {
-    return repository.findBy_id(id);
+  public WrapperEntity<Rating> getById(@PathVariable("id") ObjectId id) {
+    return new WrapperEntity<>(null, false, "Entity", repository.findById(id));
   }
  
-  @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-  public void modifyById(@PathVariable("id") ObjectId id, @Valid @RequestBody Rating rating) {
-    rating.set_id(id);
+  @RequestMapping(value = "", method = RequestMethod.PUT)
+  public WrapperEntity<Rating> modifyById(@Valid @RequestBody Rating rating) throws JsonProcessingException {
     repository.save(rating);
+    publisher.ratingSaved(rating, "update");
+    return new WrapperEntity<>(null, false, "Entity", rating);
   }
  
-  @RequestMapping(value = "/", method = RequestMethod.POST)
-  public Rating create(@Valid @RequestBody Rating rating) throws JsonProcessingException {
+  @RequestMapping(value = "", method = RequestMethod.POST)
+  public WrapperEntity<Rating> create(@Valid @RequestBody Rating rating) throws JsonProcessingException {
     rating.set_id(ObjectId.get());
-    repository.save(rating);
-    
+    repository.save(rating);    
     publisher.ratingSaved(rating, "create");
-    
-    return rating;
+    return new WrapperEntity<>(null, false, "Entity", rating);
   }
  
+  
   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-  public void deletePet(@PathVariable ObjectId id) {
-    repository.delete(repository.findBy_id(id));
+  public WrapperEntity<Rating> delete(@PathVariable ObjectId id) throws JsonProcessingException {
+    Rating rating = repository.findById(id);
+    rating.deferredDeletion = true;
+    repository.save(rating);
+    publisher.ratingSaved(rating, "delete");
+    return new WrapperEntity<>(null, false, "Entity", rating);
   }
   
   // </editor-fold>

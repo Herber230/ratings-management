@@ -41,7 +41,7 @@ public class Publisher {
             String key = "saved.rating";            
             ObjectMapper mapper = new ObjectMapper();
             
-            String messageToSend = mapper.writeValueAsString(new RatingMessage( rating._id.toHexString(), rating.idPurchase, rating.idStore, rating.idUser, rating.score, action ));
+            String messageToSend = mapper.writeValueAsString(new RatingMessage( rating.id.toHexString(), rating.idPurchase, rating.idStore, rating.idUser, rating.score, action ));
             
             template.convertAndSend(main_events.getName(), key, messageToSend);           
         }

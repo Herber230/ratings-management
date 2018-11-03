@@ -15,7 +15,7 @@ public class Store
     // <editor-fold defaultstate="uncollapsed" desc="Properties">
 
     @Id 
-    public ObjectId _id;
+    public ObjectId id;
 
     public String name;
     public String address;
@@ -50,12 +50,12 @@ public class Store
         
     // <editor-fold defaultstate="collapsed" desc="Getters & Setters">
 
-    public String get_id() {
-        return _id.toHexString();
+    public String getId() {
+        return id.toHexString();
     }
 
-    public void set_id(ObjectId _id) {
-        this._id = _id;
+    public void setId(ObjectId id) {
+        this.id = id;
     }
        
     public String getName() {
