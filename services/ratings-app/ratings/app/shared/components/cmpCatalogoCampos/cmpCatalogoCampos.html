@@ -1,0 +1,21 @@
+<div layout-padding>
+    <div layout-gt-sm="row" layout="column">
+        <div flex>
+            <entifix-input
+                value-model="vm.connectionComponent.entity.nombre"
+                show-editable-fields="vm.connectionComponent.showEditableFields.get()"
+                component-construction="vm.nombreComponentConstruction"
+                evaluate-errors="vm.connectionComponent.evaluateErrors.get(name)">
+            </entifix-input>
+        </div>
+        <br hide-gt-sm>
+        <div flex>
+            <entifix-input
+                value-model="vm.connectionComponent.entity.valor"
+                show-editable-fields="vm.connectionComponent.showEditableFields.get()"
+                component-construction="vm.valorComponentConstruction"
+                evaluate-errors="vm.connectionComponent.evaluateErrors.get(name)">
+            </entifix-input>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<table class="md-table">
+    <thead class="md-head">
+        <tr class="md-row">
+            <td class="md-column"><center ng-click="vm.connectionComponent.checkAll(vm.allSelected)"><md-checkbox aria-label="Seleccionar Todo" ng-model="vm.allSelected" ng-checked="vm.allSelected"></md-checkbox></center></td>
+            <th class="md-column"><center>#</center></th>
+            <th ng-repeat="elemento in vm.connectionComponent.tablePropertiesNavigation.get()" ng-click="vm.connectionComponent.sortTable(elemento)" ng-show="vm.connectionComponent.showColumn(elemento.display)" class="{{elemento.class}}"><center>{{elemento.display}}<md-icon class="material-icons"></md-icon></center></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="elemento in vm.connectionComponent.pager.currentData" ng-class=" {'md-row-select': elemento.$selected}" class="md-row">
+            <!--MULTISELECTION-->
+            <td>
+                <center><md-checkbox ng-click="vm.connectionComponent.multipleElementsSelection(elemento)" aria-label="Seleccionar Fila" ng-checked="elemento.$selected"></md-checkbox></center>
+            </td>
+            <td ng-click="vm.connectionComponent.singleElementSelection(elemento)" ng-dblclick="vm.connectionComponent.directEditionElement(elemento)" class="md-cell">
+                <strong><center>{{elemento.order}}</center></strong>
+            </td>
+            <td ng-click="vm.connectionComponent.singleElementSelection(elemento)" ng-dblclick="vm.connectionComponent.directEditionElement(elemento)" class="md-cell" ng-show="vm.connectionComponent.showColumn('Nombre')">
+                {{elemento.name}}
+            </td>
+            <td ng-click="vm.connectionComponent.singleElementSelection(elemento)" ng-dblclick="vm.connectionComponent.directEditionElement(elemento)" class="md-cell" ng-show="vm.connectionComponent.showColumn('Nombre Corto')">
+                {{elemento.shortName}}
+            </td>
+            
+        </tr>
+    </tbody>
+</table>
+<br/>
+<br/>
+
+Tabla pais

@@ -1,0 +1,44 @@
+<!-- Master HTML -->
+<div layout-padding>
+    
+    <div layout-gt-sm="row" layout="column">
+        <div flex>
+            <entifix-input
+                value-model="vm.connectionComponent.entity.firstName"
+                show-editable-fields="vm.connectionComponent.showEditableFields.get()"
+                component-construction="vm.firstNameComponentConstruction"
+                evaluate-errors="vm.connectionComponent.evaluateErrors.get(name)">
+            </entifix-input>
+        </div>
+        <br hide-gt-sm>
+        <div flex>
+            <entifix-input
+                value-model="vm.connectionComponent.entity.lastName"
+                show-editable-fields="vm.connectionComponent.showEditableFields.get()"
+                component-construction="vm.lastNameComponentConstruction"
+                evaluate-errors="vm.connectionComponent.evaluateErrors.get(name)">
+            </entifix-input>
+        </div>
+    </div>
+    <div layout-gt-sm="row" layout="column">
+        <div flex>
+            <entifix-input
+                value-model="vm.connectionComponent.entity.userName"
+                show-editable-fields="vm.connectionComponent.showEditableFields.get()"
+                component-construction="vm.userNameComponentConstruction"
+                evaluate-errors="vm.connectionComponent.evaluateErrors.get(name)">
+            </entifix-input>
+        </div>
+        <br hide-gt-sm>
+        <div flex>
+            <entifix-input
+                value-model="vm.connectionComponent.entity.email"
+                show-editable-fields="vm.connectionComponent.showEditableFields.get()"
+                component-construction="vm.emailNameComponentConstruction"
+                evaluate-errors="vm.connectionComponent.evaluateErrors.get(name)">
+            </entifix-input>
+        </div>
+    </div>
+    
+    <history></history>
+</div>

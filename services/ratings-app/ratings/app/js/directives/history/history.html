@@ -1,0 +1,19 @@
+<div ng-if="vm.connectionComponent.history.get()" class="animate-if history">
+    <div layout-gt-sm="row" layout="column">
+        <div flex>
+            <entifix-date-time-picker
+                value-model="vm.connectionComponent.entity.created"
+                show-editable-fields="false"
+                component-construction="vm.createdComponentConstruction"
+                evaluate-errors="vm.connectionComponent.evaluateErrors.get(name)">
+            </entifix-date-time-picker>
+        </div>
+    </div>
+    <br/>
+    <div layout-gt-sm="row" layout="column">
+        <div flex ng-if="vm.connectionComponent.entity.id">
+            <label>Identificador</label><br/>
+            <strong>{{vm.connectionComponent.entity.id}}</strong>
+        </div>
+    </div>
+</div>
