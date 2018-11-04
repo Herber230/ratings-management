@@ -1,4 +1,64 @@
 
+//PETICIONES
+
+//CRUD PARA COMPRAS _____________________________________________________________________________________________
+//===============================================================================================================
+
+
+GET http://localhost:5000/api/purchase
+
+
+
+GET http://localhost:3000/api/purchase/5bdbffae67a3533f26d2bd49
+
+
+
+POST http://localhost:5000/api/purchase
+content-type: application/json
+
+{
+    "idUser": "abcd2",
+    "total": 200,
+    "currencySymbol": "Q",
+    "idStore": "5bdbfde3f294dd3b7c5ed244"   
+}
+
+
+
+PUT http://localhost:5000/api/purchase
+content-type: application/json
+
+{
+    "idUser": "abcd2",
+    "idStore": "5bdbfde3f294dd3b7c5ed244",
+    "currencySymbol": "Q",
+    "total": 200,
+    "currencyTotal": "Q. 200",
+    "number": 100,
+    "documentNumber": "Purchase #5",
+    "created": "2018-11-04T21:17:59.591Z",
+    "id": "5bdf6207aabfcf0ba1484079",
+    "v": 0   
+}
+
+
+
+DELETE http://localhost:5000/api/purchase/5bdf312cccb6a433f585c236
+
+//===============================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+ 
+
 
 
 //Get Country
@@ -44,20 +104,6 @@ content-type: application/json
 
 
 
-
-GET http://localhost:3000/api/purchase
-
-GET http://localhost:3000/api/purchase/5bdbffae67a3533f26d2bd49
-
-POST http://localhost:3000/api/purchase
-content-type: application/json
-
-{
-    "idUser": "abcd2",
-    "total": 200,
-    "currencySymbol": "Q",
-    "idStore": "5bdbfde3f294dd3b7c5ed244"   
-}
 
 
 

@@ -5,7 +5,7 @@
         <div flex>
             <entifix-select 
                 value-model="vm.connectionComponent.entity.idUser" 
-                show-editable-fields="vm.connectionComponent.showEditableFields.get()"
+                show-editable-fields="false"
                 query-details="vm.userQueryDetails" 
                 component-construction="vm.userComponentConstruction" 
                 component-binding-out="vm.outUserInstance"
@@ -47,7 +47,48 @@
         </div>
     </div>
 
-    {{vm.connectionComponent.entity}}
+
+    <div layout-gt-sm="row" layout="column" ng-if="vm.showRating()">
+        <br/>
+        <h3>Registrar calificacion</h3>        
+    </div>
+    <div layout-gt-sm="row" layout="column" ng-if="vm.showRating()">
+        <div flex></div>
+        <div flex>
+            <!-- <entifix-input
+                value-model="vm.rating.score"
+                show-editable-fields="vm.getEditableRating()"
+                component-construction="vm.scoreComponentConstruction">
+            </entifix-input> -->
+            <h5>Puntuación de la compra</h5>
+            <br/>
+            <md-radio-group ng-model="vm.rating.score" layout="row">
+                <md-radio-button value="1" class="md-primary">1</md-radio-button>
+                <md-radio-button value="2">2</md-radio-button>
+                <md-radio-button value="3">3</md-radio-button>
+                <md-radio-button value="4">4</md-radio-button>
+                <md-radio-button value="5">5</md-radio-button>  
+            </md-radio-group>
+        </div>
+        <div flex></div>        
+    </div>
+    <div layout-gt-sm="row" layout="column" ng-if="vm.showRating()">
+        <div flex>
+            <entifix-input
+                value-model="vm.rating.opinion"
+                show-editable-fields="vm.getEditableRating()"
+                component-construction="vm.opinionComponentConstruction">
+            </entifix-input>
+        </div>
+    </div>
+    <div layout-gt-sm="row" layout="column" ng-if="vm.showRating()">
+        <md-button class="md-primary" ng-click="vm.saveRating()">
+            <md-icon class="material-icons"></md-icon> Actualizar calificacion
+        </md-button>        
+    </div>
+
+
+    
 
     <history></history>
 </div>

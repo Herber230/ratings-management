@@ -3,7 +3,7 @@
 <div layout-gt-sm="row" layout="column">
     <div flex></div>
     <div flex>
-        <entifix-select value-model="vm.idUserSelected" show-editable-fields="true"
+        <entifix-select value-model="vm.modelIdUser" show-editable-fields="true"
             query-details="vm.userQueryDetails" 
             component-construction="vm.userComponentConstruction" 
             component-binding-out="vm.outUserInstance"
@@ -13,11 +13,20 @@
     <div flex></div>
 </div>
 <br/>
+
+<md-button class="md-primary" ng-click="vm.toggleView()">
+    <md-icon class="material-icons"></md-icon> {{vm.getToggleText()}}
+</md-button>
 <br/>
-<div layout-gt-sm="row" layout="column">
-    <div flex>
-        <div ng-repeat="purchase in vm.loadedPurchases">
-            <purchase id="purchase.id"></purchase>
+<div ng-if="vm.createState">
+        <purchase id="-1" on-saved="vm.onSavedNewPurchase()" id-user="vm.idUserSelected"></purchase>
+</div>
+<div ng-if="!vm.createState">
+    <div layout-gt-sm="row" layout="column">
+        <div flex>
+            <div ng-repeat="purchase in vm.loadedPurchases">
+                <purchase id="purchase.id"></purchase>
+            </div>
         </div>
     </div>
 </div>

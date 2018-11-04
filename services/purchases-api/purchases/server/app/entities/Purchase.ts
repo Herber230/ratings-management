@@ -50,13 +50,19 @@ class Purchase extends EMEntity implements IPurchase
                 if(!this.currencySymbol)
                     this.currencySymbol = 'Q';
                     
-                let filter = { deferredDeletion: {$in: [null, false]} };
-                this.session.getModel<IPurchaseModel>('Purchase').findOne().where(filter).sort('number').exec(
+                let filters =  {
+                    $and: [
+                            { deferredDeletion: {$in: [null, false]} },
+                            { number: { $ne: null } }
+                        ] 
+                };
+
+                this.session.getModel<IPurchaseModel>('Purchase').findOne().where(filters).sort({number:-1}).exec(
                     (err, doc) =>
                     {
                         if (!err)
                         {
-                            if (doc)
+                            if (doc && doc.number)
                                 this.number = doc.number+1;
                             else
                                 this.number = 1;

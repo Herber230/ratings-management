@@ -7,3 +7,7 @@ vendor
 #For spring-boot applications
 target
 nbactions.xml
+
+
+#For mongodb instance
+services/dbdata

@@ -2,6 +2,18 @@ version: '3'
 
 services:
 
+  reverse-proxy:
+    image: traefik 
+    command: --api --docker
+    ports:
+      - "80:80"     
+      - "8080:8080" 
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    links:
+      - locationapi
+      - purchasesapi
+
   broker:
     image: "rabbitmq:3-management"
     ports:
@@ -12,3 +24,63 @@ services:
     labels:
       - "traefik.enable=false"
     
+  mongodb:
+    image: mongo:3.4
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./services/dbdata:/data/db
+    ports:
+        - 27017:27017
+    command: mongod --smallfiles --logpath=/dev/null # --quiet 
+    labels:
+      - "traefik.enable=false"
+    
+  locationapi:
+    build: services/location-api/
+    working_dir: /src
+    command: bash -c "npm install && npm run deploy"
+    volumes:
+      - ./services/location-api/location:/src
+    # ports:
+    #   - "3002:3000"        
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_SERVICE=mongodb:27017/ratings-management-location-db
+      - AMQP_SERVICE=broker:5672
+    labels:
+      - "traefik.port=3000"
+      - "traefik.frontend.rule=Host:backend.localhost;PathPrefixStrip:/location"        
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+
+  purchasesapi:
+    build: services/purchases-api/
+    working_dir: /src
+    command: bash -c "npm install && npm run deploy"
+    volumes:
+      - ./services/purchases-api/purchases:/src
+    # ports:
+    #   - "3001:3000"        
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_SERVICE=mongodb:27017/ratings-management-purchases-db"
+      - AMQP_SERVICE=broker
+    labels:
+      - "traefik.port=3000"
+      - "traefik.frontend.rule=Host:backend.localhost;PathPrefixStrip:/purchases"        
+    links:
+      - mongodb
+      - broker
+    depends_on:
+      - mongodb
+      - broker
