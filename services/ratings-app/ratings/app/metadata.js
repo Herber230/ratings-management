@@ -44,14 +44,15 @@ var globalMetadata =
         {
             "name": "City",
             "base": "Entity",
-            "url": "http://localhost:3000/api/city",
+            "allowUrlPostfix": true,
+            "url": "http://localhost:3000/api/country",
             "definedMembers":   [   { "name": "name", "paginable": "true", "default": "true", "display": "Nombre" },
                                     { "name": "zipCode", "paginable": "true", "default": "true", "display": "Codigo Postal" } ]
         },
         {
             "name": "User",
             "base": "Entity",
-            "url": "http://localhost:3000/api/user",
+            "url": "http://localhost:5001/api/user",
             "definedMembers":   [   { "name": "userName", "paginable": "true", "default": "true", "display": "Usuario" },
                                     { "name": "firstName", "paginable": "true", "default": "true", "display": "Nombres" },
                                     { "name": "lastName", "paginable": "true", "default": "true", "display": "Apellidos" },
@@ -65,8 +66,29 @@ var globalMetadata =
                                     { "name": "address", "paginable": "true", "default": "true", "display": "Direccion" },
                                     { "name": "idCity", "paginable": "true", "default": "true", "display": "Ciudad" },
                                     { "name": "idCountry", "paginable": "true", "default": "true", "display": "Pais" },
-                                    { "name": "ratingScore", "paginable": "true", "default": "true", "display": "PuntuacionTotal" },
-                                    { "name": "ratingCount", "paginable": "true", "default": "true", "display": "PuntuacionCantidad" } ]
+                                    { "name": "ratingScore", "paginable": "true", "default": "true", "display": "Punt. Total" },
+                                    { "name": "ratingCount", "paginable": "true", "default": "true", "display": "Punt. Registradas" } ]
+        },
+        {
+            "name": "Rating",
+            "base": "Entity",
+            "url": "http://localhost:8080/rating",
+            "definedMembers":   [   { "name": "idPurchase", "paginable": "true", "default": "true", "display": "Compra" },
+                                    { "name": "idStore", "paginable": "true", "default": "true", "display": "Tienda" },
+                                    { "name": "idUser", "paginable": "true", "default": "true", "display": "Usuario" },
+                                    { "name": "score", "paginable": "true", "default": "true", "display": "Puntuacion" },
+                                    { "name": "opinion", "paginable": "true", "default": "true", "display": "Opinion" } ]
+        },
+        {
+            "name": "Purchase",
+            "base": "Entity",
+            "url": "http://localhost:5000/api/purchase",
+            "definedMembers":   [   { "name": "idUser", "paginable": "true", "default": "true", "display": "Compra" },
+                                    { "name": "total", "paginable": "true", "default": "true", "display": "Tinda" },
+                                    { "name": "currencySymbol", "paginable": "true", "default": "true", "display": "Usuario" },
+                                    { "name": "idStore", "paginable": "true", "default": "true", "display": "Puntuacion" },
+                                    { "name": "currencyTotal", "paginable": "true", "default": "true", "display": "Opinion" },
+                                    { "name": "number", "paginable": "true", "default": "true", "display": "Numero" } ]
         }
     ]
 };

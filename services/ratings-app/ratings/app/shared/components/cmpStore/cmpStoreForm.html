@@ -21,6 +21,26 @@
             </entifix-input>
         </div>
     </div>
+    <div layout-gt-sm="row" layout="column">
+        <div flex>
+            <entifix-select value-model="vm.connectionComponent.entity.idCity" show-editable-fields="vm.connectionComponent.showEditableFields.get()"
+                query-details="vm.cityQueryDetails" 
+                component-construction="vm.cityComponentConstruction" 
+                component-binding-out="vm.outCityInstance"
+                evaluate-errors="vm.connectionComponent.evaluateErrors.get(name)">
+            </entifix-select>
+        </div>
+    </div>
+    <div layout-gt-sm="row" layout="column">
+        <div flex>
+            <entifix-select value-model="vm.connectionComponent.entity.idCountry" show-editable-fields="vm.connectionComponent.showEditableFields.get()"
+                query-details="vm.countryQueryDetails" 
+                component-construction="vm.countryComponentConstruction" 
+                component-binding-out="vm.outCountryInstance"
+                evaluate-errors="vm.connectionComponent.evaluateErrors.get(name)">
+            </entifix-select>
+        </div>
+    </div>
     
     <history></history>
 </div>

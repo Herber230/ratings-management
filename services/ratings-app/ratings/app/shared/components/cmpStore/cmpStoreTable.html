@@ -21,6 +21,18 @@
             <td ng-click="vm.connectionComponent.singleElementSelection(elemento)" ng-dblclick="vm.connectionComponent.directEditionElement(elemento)" class="md-cell" ng-show="vm.connectionComponent.showColumn('Direccion')">
                 {{elemento.address}}
             </td>
+            <td ng-click="vm.connectionComponent.singleElementSelection(elemento)" ng-dblclick="vm.connectionComponent.directEditionElement(elemento)" class="md-cell" ng-show="vm.connectionComponent.showColumn('Ciudad')">
+                {{elemento.$city}}
+            </td>
+            <td ng-click="vm.connectionComponent.singleElementSelection(elemento)" ng-dblclick="vm.connectionComponent.directEditionElement(elemento)" class="md-cell" ng-show="vm.connectionComponent.showColumn('Pais')">
+                {{elemento.$country}}
+            </td>
+            <td ng-click="vm.connectionComponent.singleElementSelection(elemento)" ng-dblclick="vm.connectionComponent.directEditionElement(elemento)" class="md-cell" ng-show="vm.connectionComponent.showColumn('Punt. Total')">
+                {{elemento.ratingScore}}
+            </td>
+            <td ng-click="vm.connectionComponent.singleElementSelection(elemento)" ng-dblclick="vm.connectionComponent.directEditionElement(elemento)" class="md-cell" ng-show="vm.connectionComponent.showColumn('Punt. Registradas')">
+                {{elemento.ratingCount}}
+            </td>
             
         </tr>
     </tbody>

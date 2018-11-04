@@ -1,0 +1,23 @@
+<br/>
+<br/>
+<div layout-gt-sm="row" layout="column">
+    <div flex></div>
+    <div flex>
+        <entifix-select value-model="vm.idUserSelected" show-editable-fields="true"
+            query-details="vm.userQueryDetails" 
+            component-construction="vm.userComponentConstruction" 
+            component-binding-out="vm.outUserInstance"
+            on-change="vm.onChangeUser(oldValue, newValue, entity)">
+        </entifix-select>
+    </div>
+    <div flex></div>
+</div>
+<br/>
+<br/>
+<div layout-gt-sm="row" layout="column">
+    <div flex>
+        <div ng-repeat="purchase in vm.loadedPurchases">
+            <purchase id="purchase.id"></purchase>
+        </div>
+    </div>
+</div>

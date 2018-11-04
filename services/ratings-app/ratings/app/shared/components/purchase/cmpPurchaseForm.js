@@ -42,43 +42,45 @@
         function setupComponents()
         {
             
-            vm.nameComponentConstruction = 
+            vm.storeQueryDetails =
             {
-                title: { text: 'Nombre' },
-                maxLength: 40,
-                tooltip: { text: 'Nombre de la tienda' }
+                resource: new EntifixResource('Store')
             };
 
-            vm.addressComponentConstruction = 
+            vm.storeComponentConstruction =
             {
-                title: { text: 'Dirección' },
-                maxLength: 40,
-                tooltip: { text: 'Dirección de la tienda' }
-            };
-
-
-            vm.cityQueryDetails =
-            {
-                resource: new EntifixResource('City')
-            };
-
-            vm.cityComponentConstruction =
-            {
-                title: { text: 'Ciudad' },
-                tooltip: { text: 'Elige ciudad' },
+                title: { text: 'Tienda' },
+                tooltip: { text: 'Elige la tienda' },
                 displayPropertyName: 'name'
             };
 
-            vm.countryQueryDetails =
+            vm.userQueryDetails =
             {
-                resource: new EntifixResource('Country')
+                resource: new EntifixResource('User')
             };
 
-            vm.countryComponentConstruction =
+            vm.userComponentConstruction =
             {
-                title: { text: 'Pais' },
-                tooltip: { text: 'Elige pais' },
+                title: { text: 'Usuario' },
+                tooltip: { text: 'Elige el usuario' },
                 displayPropertyName: 'name'
+            };
+
+
+
+
+            vm.currencySymbolComponentConstruction = 
+            {
+                title: { text: 'Simbolo de moneda' },
+                maxLength: 1,
+                tooltip: { text: 'Símbolo de la moneda' }
+            };
+
+            vm.totalComponentConstruction = 
+            {
+                title: { text: 'total' },
+                maxLength: 40,
+                tooltip: { text: 'total' }
             };
 
         }
@@ -88,7 +90,7 @@
 
     var component = 
     {
-        templateUrl: 'app/shared/components/cmpStore/cmpStoreForm.html',
+        templateUrl: 'app/shared/components/purchase/cmpPurchaseForm.html',
         controller: componentController,
         controllerAs: 'vm',
         bindings: 
@@ -97,6 +99,6 @@
         }
     };
 
-    angular.module(appMainModule).component('cmpStoreForm', component);
+    angular.module(appMainModule).component('cmpPurchaseForm', component);
 
 })();

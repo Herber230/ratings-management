@@ -153,7 +153,7 @@
                 url: '/country?id&searchText&page&itemsPerPage&chips&customSearch&nav',
                 title: 'Paises',
                 template: '<cmp-catalogo nombre-recurso="Country" titulo="Pais" icono="description"></cmp-catalogo>',
-                resolve: helper.resolveFor('CmpCatalogo', 'CountryFiles'),
+                resolve: helper.resolveFor('CmpCatalogo', 'CountryFiles', 'CityFiles'),
                 params: { itemsPerPage: { value: '10', squash: true }, page: { value: '1', squash: true }, searchText: { value: null, squash: true, dynamic: true }, chips: { value: null, squash: true }, customSearch: { value: null, squash: true } },
                 data: { displayRoute: ['Catálogos', 'Region'] }
             })
@@ -172,7 +172,28 @@
                 resolve: helper.resolveFor('CmpCatalogo', 'StoreFiles'),
                 params: { itemsPerPage: { value: '10', squash: true }, page: { value: '1', squash: true }, searchText: { value: null, squash: true, dynamic: true }, chips: { value: null, squash: true }, customSearch: { value: null, squash: true } },
                 data: { displayRoute: ['Catálogos', 'Tiendas'] }
+            })
+            .state('app.ratingsReview', {
+                url: '/ratings-review?id&searchText&page&itemsPerPage&chips&customSearch&nav',
+                title: 'Revision Opiniones',
+                template: '<cmp-catalogo nombre-recurso="Rating" titulo="Opiniones" icono="description"></cmp-catalogo>',
+                resolve: helper.resolveFor('CmpCatalogo', 'RatingFiles'),
+                params: { itemsPerPage: { value: '10', squash: true }, page: { value: '1', squash: true }, searchText: { value: null, squash: true, dynamic: true }, chips: { value: null, squash: true }, customSearch: { value: null, squash: true } },
+                data: { displayRoute: ['Operador', 'Opiniones'] }
+            })
+            .state('app.purchasesRating', {
+                url: '/purchases-rating?id&searchText&page&itemsPerPage&chips&customSearch&nav',
+                title: 'Calificar mis compras',
+                templateUrl: helper.basepath('/shared/states/purchasesRating/purchasesRating.html'),
+                controller: 'PurchasesRatingController',
+                controllerAs: 'vm',
+                resolve: helper.resolveFor('CmpCatalogo', 'PurchasesRatingFiles'),
+                params: { itemsPerPage: { value: '10', squash: true }, page: { value: '1', squash: true }, searchText: { value: null, squash: true, dynamic: true }, chips: { value: null, squash: true }, customSearch: { value: null, squash: true } },
+                data: { displayRoute: ['Usuario', 'Calificar mis compras'] }
             });
+
+
+
 
         //Security management
         EntifixSessionProvider.setAuthUrl(AppResources.authUrl);
@@ -251,12 +272,22 @@
             'CountryFiles':                         ['app/shared/components/cmpCountry/cmpCountryForm.js',
                                                      'app/shared/components/cmpCountry/cmpCountryTable.js'],
             
+            'CityFiles':                            ['app/shared/components/cmpCity/cmpCityForm.js',
+                                                     'app/shared/components/cmpCity/cmpCityTable.js'],
+
             'UserFiles':                            ['app/shared/components/cmpUser/cmpUserForm.js',
                                                      'app/shared/components/cmpUser/cmpUserTable.js'],
             
             'StoreFiles':                           ['app/shared/components/cmpStore/cmpStoreForm.js',
-                                                     'app/shared/components/cmpStore/cmpStoreTable.js'],                                         
-            
+                                                     'app/shared/components/cmpStore/cmpStoreTable.js'],    
+                                                     
+            'RatingFiles':                          ['app/shared/components/cmpRating/cmpRatingForm.js',
+                                                     'app/shared/components/cmpRating/cmpRatingTable.js'],
+
+            'PurchasesRatingFiles':                 ['app/shared/states/purchasesRating/purchasesRatingController.js',
+                                                     'app/shared/components/purchase/purchase.js',
+                                                     'app/shared/components/purchase/cmpPurchaseForm.js'],
+
             //Single Components ==========================================================================================================================================
             'CmpCatalogo':                          ['app/shared/components/cmpCatalogo/cmpCatalogo.js',
                                                      'app/shared/components/cmpCatalogoColumnas/cmpCatalogoColumnas.js',

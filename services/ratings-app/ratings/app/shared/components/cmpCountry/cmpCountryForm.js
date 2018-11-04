@@ -9,20 +9,13 @@
 
         vm.$onInit = function()
         {
-            setdefaults();
             activate();
-        };
-
-        // Init Methods
-
-        function setdefaults()
-        {
-            
         };
 
         function activate()
         {
             setupComponents();
+            setupTable();
         };
 
         // ==============================================================================================================================================================
@@ -56,6 +49,58 @@
                 tooltip: { text: 'Nombre corto para el país' }
             };
 
+        }
+
+        
+        function setupTable()
+        {
+            if ($stateParams.id != '-1') 
+            {
+                vm.componentConstruction =
+                {
+                    title: { text: 'Tratamientos' },
+                    icon: 'sentiment_satisfied',
+                    useMainTab: false,
+                    isModal: true
+                };
+
+                vm.cityResource = new EntifixResource('City');
+                vm.cityResource.urlPostfix.set( { getter: () => { return $stateParams.id + '/city'; } } );
+                vm.queryDetails = 
+                {
+                    resource: vm.cityResource
+                };
+
+                // vm.queryDetails.resource.urlPostfix.set( { getter: () => { return $stateParams.id + '/city'; } } );
+
+                vm.tableComponentConstruction = 
+                {
+                    name:       'cmp-city-table',
+                    bindings:   [   {name: 'connection-component', value: 'bindCtrl.connectionComponent'}   ],
+                    transformData:  { columns: [ 
+                                                { property: "created", type: 'datetime' },
+                                                { property: "modified", type: 'datetime' }
+                                                ]
+                                    },
+                    queryParams:    false
+                };
+
+                vm.entityComponentConstruction = 
+                {
+                    name:       'cmp-city-form',
+                    bindings:   [   {name: 'connection-component', value: 'bindCtrl.connectionComponent'}   ]
+                };
+
+                vm.entityQueryDetails = 
+                {
+                    resource: vm.cityResource
+                }
+                
+                // vm.entityComponentBehavior = 
+                // {
+                //     events: { onChangeEntity: (oldEntity, newEntity)=> { if (!newEntity.idDisease) newEntity.idDisease = $stateParams.id; } }
+                // }
+            }
         }
         // ==============================================================================================================================================================
 

@@ -44,10 +44,7 @@
         function obtenerSubComponenteTabla()
         {
             switch(vm.nombreRecurso) 
-            {
-                case 'class':
-                    return 'cmp-class-columnas';
-
+            {                
                 case 'Country':
                     return 'cmp-country-table';
 
@@ -56,6 +53,9 @@
 
                 case 'Store':
                     return 'cmp-store-table';
+
+                case 'Rating':
+                    return 'cmp-rating-table';
 
                 //Opción por defecto para todos los catálogos
                 default:
@@ -67,9 +67,6 @@
         {
             switch(vm.nombreRecurso) 
             {
-                case 'class':
-                    return 'cmp-class-campos';
-
                 case 'Country':
                     return 'cmp-country-form';
 
@@ -78,6 +75,9 @@
 
                 case 'Store':
                     return 'cmp-store-form';
+
+                case 'Rating':
+                    return 'cmp-rating-form';
 
                 //Opción por defecto para todos los catálogos
                 default:
@@ -93,6 +93,20 @@
             {
                 vm.componentConstruction.paramName = '_id';
                 //vm.entityComponentConstruction.allowActions = false;
+            }
+
+            if (type == 'Store')
+            {
+                vm.tableComponentConstruction.transformData.columns.push({ property: "idCountry", type: 'entity', display: 'name', resource: new EntifixResource('Country'), outProperty: '$country' });
+                vm.tableComponentConstruction.transformData.columns.push({ property: "idCity", type: 'entity', display: 'name', resource: new EntifixResource('City'), outProperty: '$city' });                
+            }
+
+            if (type == 'Rating')
+            {
+                vm.tableComponentConstruction.transformData.columns.push({ property: "idUser", type: 'entity', display: 'userName', resource: new EntifixResource('User'), outProperty: '$user' });
+                vm.tableComponentConstruction.transformData.columns.push({ property: "idStore", type: 'entity', display: 'name', resource: new EntifixResource('Store'), outProperty: '$store' });                
+                vm.tableComponentConstruction.transformData.columns.push({ property: "idPurchase", type: 'entity', display: 'documentNumber', resource: new EntifixResource('Purchase'), outProperty: '$purchase' });                
+            
             }
         }
         
@@ -120,12 +134,9 @@
             vm.tableComponentConstruction = 
             {
                 name:       obtenerSubComponenteTabla(),
-                bindings:   [   {name: 'connection-component', value: 'bindCtrl.connectionComponent'}   ],
-                transformData:  { columns: [ 
-                                            { property: "fechaRegistrado", type: 'datetime' },
-                                            { property: "fechaActualizado", type: 'datetime' }
-                                           ]
-                                }
+                bindings:       [   {name: 'connection-component', value: 'bindCtrl.connectionComponent'}   ],
+                transformData:  { columns: [    { property: "created", type: 'datetime' },
+                                                { property: "modified", type: 'datetime' }  ]   }
             };
 
             vm.entityComponentConstruction = 

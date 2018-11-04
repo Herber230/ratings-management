@@ -45,10 +45,6 @@
                 icon: "folder",
                 submenuItems: [
                     {
-                        name: "Class",
-                        state: "app.class({id:null})"
-                    },
-                    {
                         name: "Ubicaciones",
                         state: "app.country({id:null})"
                     },
@@ -63,16 +59,22 @@
                 ]
             },
             {
-                name: "Menú 2",
+                name: "Operadores",
                 icon: "store mall directory",
                 submenuItems: [
                     {
-                        name: "Submenú 2",
-                        state: "app.submenu2({id:null})"
-                    },
+                        name: "Revision opiniones",
+                        state: "app.ratingsReview({id:null})"
+                    }
+                ]
+            },
+            {
+                name: "Usuarios",
+                icon: "store mall directory",
+                submenuItems: [
                     {
-                        name: "Submenú 3",
-                        state: "app.submenu3({id:null})"
+                        name: "Calificar mis compras",
+                        state: "app.purchasesRating({id:null})"
                     }
                 ]
             }

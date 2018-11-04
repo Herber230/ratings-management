@@ -23,3 +23,21 @@
     
     <history></history>
 </div>
+
+
+<div ng-if="vm.connectionComponent.entity.id && !vm.connectionComponent.showEditableFields.get()">
+    <br/>
+    <entifix-catalog
+        component-construction = "vm.componentConstruction"
+        query-details = "vm.queryDetails" 
+        table-component-construction = "vm.tableComponentConstruction"
+        table-component-behavior = "vm.tableComponentBehavior"
+        table-component-binding-out = "vm.tableComponentBindingOut"
+        table-query-details = "vm.tableQueryDetails"
+        entity-component-construction = "vm.entityComponentConstruction"
+        entity-component-behavior = "vm.entityComponentBehavior"
+        entity-component-binding-out = "vm.entityComponentBindingOut"
+        entity-query-details = "vm.entityQueryDetails">
+    </entifix-catalog>
+    <br/>
+</div>

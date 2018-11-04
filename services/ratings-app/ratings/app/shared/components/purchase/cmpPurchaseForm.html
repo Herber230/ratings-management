@@ -1,0 +1,53 @@
+<!-- Master HTML -->
+<div layout-padding>
+
+    <div layout-gt-sm="row" layout="column">
+        <div flex>
+            <entifix-select 
+                value-model="vm.connectionComponent.entity.idUser" 
+                show-editable-fields="vm.connectionComponent.showEditableFields.get()"
+                query-details="vm.userQueryDetails" 
+                component-construction="vm.userComponentConstruction" 
+                component-binding-out="vm.outUserInstance"
+                evaluate-errors="vm.connectionComponent.evaluateErrors.get(name)">
+            </entifix-select>
+        </div>
+    </div>
+
+    <div layout-gt-sm="row" layout="column">
+        <div flex>
+            <entifix-select 
+                value-model="vm.connectionComponent.entity.idStore" 
+                show-editable-fields="vm.connectionComponent.showEditableFields.get()"
+                query-details="vm.storeQueryDetails" 
+                component-construction="vm.storeComponentConstruction" 
+                component-binding-out="vm.outStoreInstance"
+                evaluate-errors="vm.connectionComponent.evaluateErrors.get(name)">
+            </entifix-select>
+        </div>
+    </div>
+
+    <div layout-gt-sm="row" layout="column">
+        <div flex>
+            <entifix-input
+                value-model="vm.connectionComponent.entity.currencySymbol"
+                show-editable-fields="vm.connectionComponent.showEditableFields.get()"
+                component-construction="vm.currencySymbolComponentConstruction"
+                evaluate-errors="vm.connectionComponent.evaluateErrors.get(name)">
+            </entifix-input>
+        </div>
+        <br hide-gt-sm>
+        <div flex>
+            <entifix-input
+                value-model="vm.connectionComponent.entity.total"
+                show-editable-fields="vm.connectionComponent.showEditableFields.get()"
+                component-construction="vm.totalComponentConstruction"
+                evaluate-errors="vm.connectionComponent.evaluateErrors.get(name)">
+            </entifix-input>
+        </div>
+    </div>
+
+    {{vm.connectionComponent.entity}}
+
+    <history></history>
+</div>

@@ -57,30 +57,6 @@
             };
 
 
-            vm.cityQueryDetails =
-            {
-                resource: new EntifixResource('City')
-            };
-
-            vm.cityComponentConstruction =
-            {
-                title: { text: 'Ciudad' },
-                tooltip: { text: 'Elige ciudad' },
-                displayPropertyName: 'name'
-            };
-
-            vm.countryQueryDetails =
-            {
-                resource: new EntifixResource('Country')
-            };
-
-            vm.countryComponentConstruction =
-            {
-                title: { text: 'Pais' },
-                tooltip: { text: 'Elige pais' },
-                displayPropertyName: 'name'
-            };
-
         }
         // ==============================================================================================================================================================
 
@@ -88,7 +64,7 @@
 
     var component = 
     {
-        templateUrl: 'app/shared/components/cmpStore/cmpStoreForm.html',
+        templateUrl: 'app/shared/components/cmpRating/cmpRatingForm.html',
         controller: componentController,
         controllerAs: 'vm',
         bindings: 
@@ -97,6 +73,6 @@
         }
     };
 
-    angular.module(appMainModule).component('cmpStoreForm', component);
+    angular.module(appMainModule).component('cmpRatingForm', component);
 
 })();

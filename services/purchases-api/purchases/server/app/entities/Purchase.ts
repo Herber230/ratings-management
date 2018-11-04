@@ -7,7 +7,8 @@ import {
     ExpositionType,  
     EMMemberActivator,
     MemberBindingType,
-    EMSession
+    EMSession,
+    EntityMovementFlow
 } from 'entifix-ts-backend';
 
 import { PurchaseRating, IPurchaseRatingModel, IPurchaseRating } from './PurchaseRating';
@@ -19,8 +20,10 @@ interface IPurchase extends IBaseEntity
     idUser: string,
     total: number,
     currencySymbol: string,
-    idStore: string,   
-    purchaseRatings : Array<IPurchaseRating>
+    idStore: string,
+    score: number,
+    number: number  
+    // purchaseRatings : Array<IPurchaseRating>
 }
 
 interface IPurchaseModel extends EntityDocument, IPurchase { }
@@ -36,6 +39,41 @@ class Purchase extends EMEntity implements IPurchase
 
 
     //#region Methods
+
+
+    onSaving() : Promise<EntityMovementFlow>
+    {
+        return new Promise<EntityMovementFlow>( (resolve, reject)=>{
+
+            if (this.isNew)
+            {
+                if(!this.currencySymbol)
+                    this.currencySymbol = 'Q';
+                    
+                let filter = { deferredDeletion: {$in: [null, false]} };
+                this.session.getModel<IPurchaseModel>('Purchase').findOne().where(filter).sort('number').exec(
+                    (err, doc) =>
+                    {
+                        if (!err)
+                        {
+                            if (doc)
+                                this.number = doc.number+1;
+                            else
+                                this.number = 1;
+                            
+                            resolve({continue: true});
+                        }
+                        else
+                            reject(err);                        
+                    }
+                );
+            }
+            else
+                resolve({continue:true});
+        });
+    }
+
+
 
     //#endregion
 
@@ -60,7 +98,7 @@ class Purchase extends EMEntity implements IPurchase
     set currencySymbol (value : string)
     { (<IPurchaseModel>this._document).currencySymbol = value; }
 
-    @DefinedAccessor({ exposition: ExpositionType.Normal, schema: { type: String } })
+    @DefinedAccessor({ exposition: ExpositionType.Normal, schema: { type: Number } })
     get total () : number
     { return (<IPurchaseModel>this._document).total; }
     set total (value : number)
@@ -68,25 +106,42 @@ class Purchase extends EMEntity implements IPurchase
 
     @DefinedAccessor({ exposition: ExpositionType.ReadOnly })
     get currencyTotal () : string
-    { return `${this.currencySymbol} . ${this.total}`; }
+    { return `${this.currencySymbol}. ${this.total}`; }
+
+    @DefinedAccessor({ exposition: ExpositionType.Normal, schema: { type: Number } })
+    get score () : number
+    { return (<IPurchaseModel>this._document).score; }
+    set score (value : number)
+    { (<IPurchaseModel>this._document).score = value; }
+
+    @DefinedAccessor({ exposition: ExpositionType.Normal, schema: { type: Number } })
+    get number () : number
+    { return (<IPurchaseModel>this._document).number; }
+    set number (value : number)
+    { (<IPurchaseModel>this._document).number = value; }
+
+    @DefinedAccessor({ exposition: ExpositionType.ReadOnly })
+    get documentNumber () : string
+    { return `Purchase #${this.number}`; }
 
 
-    @DefinedAccessor( { exposition: ExpositionType.Normal, schema: { type: Array },
-                        activator: new EMMemberActivator<PurchaseRating, IPurchaseRatingModel>(PurchaseRating.getInfo(), MemberBindingType.Snapshot, true ) } )
-    get purchaseRatings () : Array<PurchaseRating>
-    { return this._purchaseRatings; }
-    set purchaseRatings( value : Array<PurchaseRating> )
-    {
-        this._purchaseRatings = value;
+    
+    // @DefinedAccessor( { exposition: ExpositionType.Normal, schema: { type: Array },
+    //                     activator: new EMMemberActivator<PurchaseRating, IPurchaseRatingModel>(PurchaseRating.getInfo(), MemberBindingType.Snapshot, true ) } )
+    // get purchaseRatings () : Array<PurchaseRating>
+    // { return this._purchaseRatings; }
+    // set purchaseRatings( value : Array<PurchaseRating> )
+    // {
+    //     this._purchaseRatings = value;
 
-        if (value != null)
-        {
-            let docs = value.map( v => v.getDocument() as IPurchaseRatingModel );
-            (this._document as IPurchaseModel).purchaseRatings = docs;
-        }
-        else
-            (this._document as IPurchaseModel).purchaseRatings = null;
-    }
+    //     if (value != null)
+    //     {
+    //         let docs = value.map( v => v.getDocument() as IPurchaseRatingModel );
+    //         (this._document as IPurchaseModel).purchaseRatings = docs;
+    //     }
+    //     else
+    //         (this._document as IPurchaseModel).purchaseRatings = null;
+    // }
 
 
     //#endregion
