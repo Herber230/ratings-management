@@ -50,7 +50,6 @@ class App extends entifix.EntifixApplication
         let config : entifix.EntifixAppConfig = {
             serviceName: 'ratings-management-users',
             mongoService: process.env.MONGO_SERVICE || 'localhost:27017/ratings-management-users-db',
-            amqpService: process.env.AMQP_SERVICE,
             cors: { enable: true },
             protectRoutes: { enable: false },
             devMode: true

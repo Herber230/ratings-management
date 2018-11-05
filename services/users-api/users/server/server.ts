@@ -1,7 +1,7 @@
 import http = require('http');
 import { App } from './app';
 
-var port: number = 5001;
+var port: number = 3000;
 
 var expressApp = new App(port).expressApp;
 var httpServer = http.createServer( expressApp );

@@ -30,7 +30,7 @@ services:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
     volumes:
-      - ./services/dbdata:/data/db
+      - ./services/database/dbdata:/data/db
     ports:
         - 27017:27017
     command: mongod --smallfiles --logpath=/dev/null # --quiet 
@@ -50,7 +50,7 @@ services:
     depends_on:
       - mongodb
     environment:
-      - MONGO_SERVICE=mongodb:27017/ratings-management-location-db
+      - MONGO_SERVICE=mongodb:27017/ratings_management_location_db
       - AMQP_SERVICE=broker:5672
     labels:
       - "traefik.port=3000"
@@ -73,7 +73,7 @@ services:
     depends_on:
       - mongodb
     environment:
-      - MONGO_SERVICE=mongodb:27017/ratings-management-purchases-db"
+      - MONGO_SERVICE=mongodb:27017/ratings_management_purchases_db"
       - AMQP_SERVICE=broker
     labels:
       - "traefik.port=3000"
@@ -84,3 +84,25 @@ services:
     depends_on:
       - mongodb
       - broker
+
+  usersapi:
+    build: services/users-api/
+    working_dir: /src
+    command: bash -c "npm install && npm run deploy"
+    volumes:
+      - ./services/users-api/users:/src
+    # ports:
+    #   - "3001:3000"        
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    environment:
+      - MONGO_SERVICE=mongodb:27017/local"
+    labels:
+      - "traefik.port=3000"
+      - "traefik.frontend.rule=Host:backend.localhost;PathPrefixStrip:/users"        
+    links:
+      - mongodb
+    depends_on:
+      - mongodb

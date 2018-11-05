@@ -10,4 +10,4 @@ nbactions.xml
 
 
 #For mongodb instance
-services/dbdata
+dbdata
